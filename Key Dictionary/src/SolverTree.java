@@ -52,9 +52,9 @@ public class SolverTree
 		curr.child1 = new Node(pullLetter(firstDigit,1));
 		curr.child2 = new Node(pullLetter(firstDigit,2));
 		curr.child3 = new Node(pullLetter(firstDigit,3));
-		if(digits.length == 4)
+		if(phone[firstDigit].length() >= 4)
 		{
-			curr.child3 = new Node(pullLetter(firstDigit,4));
+			curr.child4 = new Node(pullLetter(firstDigit,4));
 		}
 		
 		//recursive calls
@@ -73,40 +73,30 @@ public class SolverTree
 	private String pullLetter(int loc,int child)
 	{
 		String ret = this.phone[loc];
-		if(ret.length() == 0)
+		if(child == 4)
 		{
-			return null;
+				if(ret.length() == 3)
+				{
+					return "";
+				}
+				else
+				{
+					char c = ret.charAt(3);
+					String returns = Character.toString(c);
+					return returns;
+				}
 		}
-		if(child == 1)
-		{
-			ret = ret.substring(0,child);
-		}
-		else
-		{
-			if(child == 4)
-			{
-				ret = ret.substring(child-2,child-1);
-			}
-			else
-			{
-				ret = ret.substring(child-1,child);
-			}
-		}
-		return ret;
+		char c = ret.charAt(child-1);
+		String returns = Character.toString(c);
+		
+		return returns;
 	}
 	
-	public void checkNode(Node node)
-	{
-		System.out.println(node.child1.data);
-		System.out.println(node.child2.data);
-		System.out.println(node.child3.data);
-		//System.out.println(node.child4.data);
-	}
 	
-	public LinkedList solveTree() {
+	public LinkedList solveTree(int len) {
 		
 		LinkedList results = new LinkedList();
-		bruteForce(root,"",results);
+		bruteForce(root,"",results,len);
 		//printList(results);
 		return results;
 	}
@@ -124,24 +114,22 @@ public class SolverTree
 		}
 	}
 	
-	private void bruteForce(Node node,String s,LinkedList results) 
+	private void bruteForce(Node node,String s,LinkedList results,int len) 
 	{
 		if(node != null)
 		{
 			s += node.data;
-			bruteForce(node.child1,s,results);
-			bruteForce(node.child2,s,results);
-			bruteForce(node.child3,s,results);
-			bruteForce(node.child4,s,results);
+			bruteForce(node.child1,s,results,len);
+			bruteForce(node.child2,s,results,len);
+			bruteForce(node.child3,s,results,len);
+			bruteForce(node.child4,s,results,len);
 			if(node.child1 == null || node.child2 == null|| node.child3 == null || node.child4 == null)
 			{
-				/*
-				if(s.length()>= 3)
+				if(s.length()>= len)
 				{
 					results.add(s);
 				}
-				*/
-				results.add(s);
+				
 			}
 		}
 		return;

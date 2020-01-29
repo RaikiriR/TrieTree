@@ -13,7 +13,7 @@ public class DictHashTable
 		this.dictionary = fillHashtable(reader);
 	}
 
-	public boolean checkValue(String check)
+	public boolean isWord(String check)
 	{
 		boolean x = dictionary.containsKey(check);
 		return x;

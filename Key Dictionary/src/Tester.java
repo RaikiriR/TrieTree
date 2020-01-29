@@ -21,20 +21,30 @@ public class Tester {
 		
 
 		int[] test = console(ui);		
+		int len = test.length;
+		
+		
 		DictHashTable hash = new DictHashTable(reader);
 		DictPrefixTree tree = new DictPrefixTree();
+		
 		
 		//Resetting Buffer for second tree
 		reader = new BufferedReader(new FileReader(file));
 		tree = tree.fillTree(reader,tree);
 		
+		
+
 		SolverTree solve = new SolverTree();
 		solve.buildSolver(test, solve.root);
 
 		//Linked List returning all possible combinations
-		LinkedList results = solve.solveTree();
+		LinkedList results = solve.solveTree(len);
 		System.out.println("Here are all of your results: ");
+		System.out.print("Search using PrefixTree: ");
+		solveTree(results,tree);
+		System.out.print("Search using HashTable: ");
 		solveList(results,hash);
+
 		
 	}
 	
@@ -49,7 +59,26 @@ public class Tester {
 		for(int i = 0; i < list.size();i++)
 		{
 			test = (String)list.get(i);
-			if(dictionary.checkValue(test)==true)
+			if(dictionary.isWord(test)==true)
+			{
+				System.out.print(test + " ");
+			}
+		}
+		System.out.println();
+	}
+	
+	public static void solveTree(LinkedList list, DictPrefixTree dictionary)
+	{
+		String test;
+		if(list == null)
+		{
+			System.out.println("none");
+			return;
+		}
+		for(int i = 0; i < list.size();i++)
+		{
+			test = (String)list.get(i);
+			if(dictionary.findWord(test)==true)
 			{
 				System.out.print(test + " ");
 			}
@@ -80,38 +109,14 @@ public class Tester {
 	
 	public static int[] console(Scanner ui)
 	{
-		String answer = "yes";
-		int[] out = new int[4];
-		while(true)
+		String strings = ui.nextLine();
+		int[] intarray=new int[strings.length()];
+		for(int i = 0;i < intarray.length; i++)
 		{
-			System.out.println("Do you want to enter 3 numbers? yes for 3 and no for 4. (y/n): ");
-			answer = ui.next();
-			if(answer.contains("y"))
-			{
-				break;
-			}
-			if(answer.contains("n"))
-			{
-				break;
-			}
+			intarray[i] = Character.getNumericValue(strings.charAt(i));
 		}
-		if(answer.equalsIgnoreCase("y"))
-		{
-			System.out.println("Enter 3 numbers individually pressing enter after each");
-			out[0]= ui.nextInt();
-			out[1]= ui.nextInt();
-			out[2]= ui.nextInt();
-			
-		}
-		else
-		{
-			System.out.println("Enter 4 numbers individually pressing enter after each");
-			out[0]= ui.nextInt();
-			out[1]= ui.nextInt();
-			out[2]= ui.nextInt();
-			out[3]= ui.nextInt();
-			
-		}
-		return out;
+		return intarray;
 	}
+	
+	
 }
