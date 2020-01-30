@@ -20,8 +20,6 @@ public class Tester {
 		
 		
 
-		int[] test = console(ui);		
-		int len = test.length;
 		
 		
 		DictHashTable hash = new DictHashTable(reader);
@@ -33,7 +31,8 @@ public class Tester {
 		tree = tree.fillTree(reader,tree);
 		
 		
-
+		int[] test = console(ui);		
+		int len = test.length;
 		SolverTree solve = new SolverTree();
 		solve.buildSolver(test, solve.root);
 
@@ -113,7 +112,7 @@ public class Tester {
 		int[] intarray=new int[strings.length()];
 		for(int i = 0;i < intarray.length; i++)
 		{
-			intarray[i] = Character.getNumericValue(strings.charAt(i));
+			intarray[i] = Character.getNumericValue(strings.charAt(i)) - 1;
 		}
 		return intarray;
 	}
