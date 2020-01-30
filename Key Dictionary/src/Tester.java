@@ -59,7 +59,7 @@ public class Tester {
 			System.out.println("Do you want to search again? type exit to exit: ");
 			exit = ui.nextLine();
 		}
-		System.out.println("goodbye...");
+		System.out.println("Program closed.");
 	}
 	
 	public static void solveList(LinkedList list, DictHashTable dictionary)
