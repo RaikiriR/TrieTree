@@ -30,21 +30,36 @@ public class Tester {
 		reader = new BufferedReader(new FileReader(file));
 		tree = tree.fillTree(reader,tree);
 		
-		
-		int[] test = console(ui);		
-		int len = test.length;
-		SolverTree solve = new SolverTree();
-		solve.buildSolver(test, solve.root);
+		String exit = "";
+		boolean solvercheck = false;
+		while(exit.contains("exit") == false)
+		{
 
-		//Linked List returning all possible combinations
-		LinkedList results = solve.solveTree(len);
-		System.out.println("Here are all of your results: ");
-		System.out.print("Search using PrefixTree: ");
-		solveTree(results,tree);
-		System.out.print("Search using HashTable: ");
-		solveList(results,hash);
-
+			System.out.println("Please enter a number using digits 2-9 (For large numbers this may take a bit!): ");
+			int[] test = console(ui);		
+			int len = test.length;
+			if(test.length != 0)
+			{
+				SolverTree solve = new SolverTree();
+				solve.buildSolver(test, solve.root);
 		
+				//Linked List returning all possible combinations
+				LinkedList results = solve.solveTree(len);
+				System.out.println("Here are all of your results: ");
+				System.out.print("Search using PrefixTree: ");
+				solveTree(results,tree);
+				System.out.print("Search using HashTable: ");
+				solveList(results,hash);
+			}
+			else
+			{
+				System.out.println("invalid input");
+			}
+
+			System.out.println("Do you want to search again? type exit to exit: ");
+			exit = ui.nextLine();
+		}
+		System.out.println("goodbye...");
 	}
 	
 	public static void solveList(LinkedList list, DictHashTable dictionary)
@@ -109,13 +124,18 @@ public class Tester {
 	public static int[] console(Scanner ui)
 	{
 		String strings = ui.nextLine();
+		if(strings.contains("0") == true || strings.contains("1") ||strings.matches("^[a-zA-Z]*$") || strings.contains(" "))
+		{
+			int[] falsearray = new int[0];
+			return falsearray;
+		}
 		int[] intarray=new int[strings.length()];
+	
 		for(int i = 0;i < intarray.length; i++)
 		{
 			intarray[i] = Character.getNumericValue(strings.charAt(i)) - 1;
 		}
 		return intarray;
 	}
-	
 	
 }
